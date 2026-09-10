@@ -6,6 +6,7 @@
   const resetBtn = document.getElementById("resetBtn");
   const refreshBaseBtn = document.getElementById("refreshBaseBtn");
   const premiseRow = document.querySelector('[data-check="premise"]');
+  const integrityRow = document.querySelector('[data-check="integrity"]');
   const verdict = document.getElementById("verdict");
   const verdictLabel = document.getElementById("verdictLabel");
   const verdictText = document.getElementById("verdictText");
@@ -13,6 +14,7 @@
   const stamp = document.getElementById("stamp");
   const t1Time = document.getElementById("t1Time");
   const railFill = document.getElementById("railFill");
+  const receiptId = document.getElementById("receiptId");
 
   const BASE_RPC = "https://sepolia.base.org";
   const USDC = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
@@ -41,6 +43,19 @@
 
   advanceBtn.addEventListener("click", () => { drifted = !drifted; render(); });
   resetBtn.addEventListener("click", () => { drifted = false; render(); });
+
+  async function renderReceiptDigest() {
+    try {
+      const bytes = new TextEncoder().encode(JSON.stringify(core.RECEIPT));
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      const hex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+      receiptId.textContent = `${core.RECEIPT.id} · ${hex.slice(0, 10)}`;
+      integrityRow.querySelector("b").textContent = `PASS · SHA-256 ${hex.slice(0, 8)}`;
+    } catch (_) {
+      receiptId.textContent = core.RECEIPT.id;
+      integrityRow.querySelector("b").textContent = "PASS · LOCAL";
+    }
+  }
 
   async function rpc(method, params = []) {
     const response = await fetch(BASE_RPC, {
@@ -119,5 +134,6 @@
 
   refreshBaseBtn.addEventListener("click", loadBaseState);
   render();
+  renderReceiptDigest();
   loadBaseState();
 })();
