@@ -1,13 +1,15 @@
 project: COUNTERMAND
 handover_date: 2026-09-10
-from: PRODUCT_BUILD
-to: DEPLOYMENT_AND_RUNTIME_ASSURANCE
+from: PRODUCT_BUILD_AND_ASSURANCE
+to: PUBLIC_RUNTIME_AND_BASE_PROOF
 
 resume:
   read_first:
     - state/CURRENT.yaml
     - product/PRD-0.1.md
     - product/DAYBREAK-BENCHMARK-AND-BEYOND-BAR.md
+    - evidence/BASE-SEPOLIA-READ-PROOF.md
+    - evidence/BASE-SEPOLIA-WRITE-GATE.md
     - BASE-BATCHES-004-APPLICATION-DRAFT.md
     - FOUNDER-VIDEO-PITCH.md
 
@@ -18,23 +20,44 @@ resume:
     - app.js
     - api/base-state.js
     - tests/core.test.js
+    - .github/workflows/assurance.yml
+
+  validation:
+    deterministic_core: PASS_6_OF_6
+    verified_actions_run: 34442464857
+    conclusion: SUCCESS
 
   evaluator_path: >-
     Run the above-fold decision receipt. Default state ALLOW. Advance context
     +11 min. Wallet permission, spend cap, exact action, and integrity remain
     PASS while the original premise fails. The product stamps COUNTERMAND and
-    returns REPLAN_REQUIRED.
+    returns REPLAN_REQUIRED. Receipt integrity also displays a browser-computed
+    SHA-256 digest of the canonical receipt object.
 
   live_base_path: >-
     /api/base-state performs read-only JSON-RPC calls against Base Sepolia,
     verifies chain ID 84532, reads the latest block, and checks bytecode
     presence for Base Sepolia USDC and Coinbase Spend Permission Manager.
+    app.js has a browser-direct Base RPC fallback for static preview hosts.
+
+  deployment_state: >-
+    No public COUNTERMAND runtime has been verified yet. The Vercel connector
+    exposed no team/account context and therefore could not be used to create
+    a deployment from chat. Treat this as an infrastructure-access blocker,
+    not a product failure. Do not invent a Vercel URL.
+
+  base_write_state: >-
+    evidence/BASE-SEPOLIA-WRITE-GATE.md is prepared. No transaction has been
+    sent. A Base Sepolia x402/USDC write remains human-gated and requires local
+    wallet authentication; OTPs, keys, tokens and session material must never
+    be pasted into chat or committed.
 
   forbidden:
+    - claiming a public runtime before smoke verification
     - claiming a Base COUNTERMAND contract exists
     - claiming x402 execution occurred
     - claiming production or real-money evidence
-    - committing or requesting private keys
+    - committing or requesting private keys, OTPs or wallet session material
     - submitting the Base Batches form without explicit human action
 
-  next_exact_gate: DEPLOYMENT_AND_RUNTIME_SMOKE
+  next_exact_gate: PUBLIC_RUNTIME_DEPLOYMENT_AND_SMOKE
