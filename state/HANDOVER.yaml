@@ -1,7 +1,7 @@
 project: COUNTERMAND
 handover_date: 2026-09-10
-from: PRODUCT_BUILD_AND_ASSURANCE
-to: PUBLIC_RUNTIME_AND_BASE_PROOF
+from: PRODUCT_BUILD_AND_PUBLIC_DEPLOYMENT
+to: PUBLIC_RUNTIME_SMOKE_AND_BASE_PROOF
 
 resume:
   read_first:
@@ -10,8 +10,16 @@ resume:
     - product/DAYBREAK-BENCHMARK-AND-BEYOND-BAR.md
     - evidence/BASE-SEPOLIA-READ-PROOF.md
     - evidence/BASE-SEPOLIA-WRITE-GATE.md
+    - evidence/VERCEL-PRODUCTION-VISIBLE-2026-09-10.md
     - BASE-BATCHES-004-APPLICATION-DRAFT.md
     - FOUNDER-VIDEO-PITCH.md
+
+  public_runtime:
+    url: https://countermand-mu.vercel.app
+    dashboard_observed_state: Ready
+    observed_source_branch: main
+    observed_commit: 231578c22a21b877b426532e33b128204c748952
+    interaction_smoke: PENDING
 
   built:
     - index.html
@@ -28,23 +36,24 @@ resume:
     conclusion: SUCCESS
 
   evaluator_path: >-
-    Run the above-fold decision receipt. Default state ALLOW. Advance context
-    +11 min. Wallet permission, spend cap, exact action, and integrity remain
-    PASS while the original premise fails. The product stamps COUNTERMAND and
-    returns REPLAN_REQUIRED. Receipt integrity also displays a browser-computed
+    Open the public runtime. Default state must be ALLOW. Advance context +11 min.
+    Wallet permission, spend cap, exact action, and integrity must remain PASS
+    while the original premise fails. The product must stamp COUNTERMAND and
+    return REPLAN_REQUIRED. Receipt integrity should display a browser-computed
     SHA-256 digest of the canonical receipt object.
 
   live_base_path: >-
     /api/base-state performs read-only JSON-RPC calls against Base Sepolia,
     verifies chain ID 84532, reads the latest block, and checks bytecode
     presence for Base Sepolia USDC and Coinbase Spend Permission Manager.
-    app.js has a browser-direct Base RPC fallback for static preview hosts.
+    app.js also contains a browser-direct Base RPC fallback.
 
   deployment_state: >-
-    No public COUNTERMAND runtime has been verified yet. The Vercel connector
-    exposed no team/account context and therefore could not be used to create
-    a deployment from chat. Treat this as an infrastructure-access blocker,
-    not a product failure. Do not invent a Vercel URL.
+    The Vercel production deployment is now human-observed as Ready at
+    https://countermand-mu.vercel.app and visibly renders COUNTERMAND. This
+    clears the public-runtime existence blocker, but it is not yet a complete
+    runtime smoke. Do not claim the Base live-read path or interactive judge
+    path as production-verified until manually exercised on the public URL.
 
   base_write_state: >-
     evidence/BASE-SEPOLIA-WRITE-GATE.md is prepared. No transaction has been
@@ -53,11 +62,11 @@ resume:
     be pasted into chat or committed.
 
   forbidden:
-    - claiming a public runtime before smoke verification
+    - claiming full runtime verification from the Vercel dashboard alone
     - claiming a Base COUNTERMAND contract exists
     - claiming x402 execution occurred
     - claiming production or real-money evidence
     - committing or requesting private keys, OTPs or wallet session material
     - submitting the Base Batches form without explicit human action
 
-  next_exact_gate: PUBLIC_RUNTIME_DEPLOYMENT_AND_SMOKE
+  next_exact_gate: PUBLIC_RUNTIME_INTERACTION_SMOKE
