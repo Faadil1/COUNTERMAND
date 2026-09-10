@@ -1,0 +1,40 @@
+project: COUNTERMAND
+handover_date: 2026-09-10
+from: PRODUCT_BUILD
+to: DEPLOYMENT_AND_RUNTIME_ASSURANCE
+
+resume:
+  read_first:
+    - state/CURRENT.yaml
+    - product/PRD-0.1.md
+    - product/DAYBREAK-BENCHMARK-AND-BEYOND-BAR.md
+    - BASE-BATCHES-004-APPLICATION-DRAFT.md
+    - FOUNDER-VIDEO-PITCH.md
+
+  built:
+    - index.html
+    - styles.css
+    - countermand-core.js
+    - app.js
+    - api/base-state.js
+    - tests/core.test.js
+
+  evaluator_path: >-
+    Run the above-fold decision receipt. Default state ALLOW. Advance context
+    +11 min. Wallet permission, spend cap, exact action, and integrity remain
+    PASS while the original premise fails. The product stamps COUNTERMAND and
+    returns REPLAN_REQUIRED.
+
+  live_base_path: >-
+    /api/base-state performs read-only JSON-RPC calls against Base Sepolia,
+    verifies chain ID 84532, reads the latest block, and checks bytecode
+    presence for Base Sepolia USDC and Coinbase Spend Permission Manager.
+
+  forbidden:
+    - claiming a Base COUNTERMAND contract exists
+    - claiming x402 execution occurred
+    - claiming production or real-money evidence
+    - committing or requesting private keys
+    - submitting the Base Batches form without explicit human action
+
+  next_exact_gate: DEPLOYMENT_AND_RUNTIME_SMOKE
