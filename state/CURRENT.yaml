@@ -1,6 +1,6 @@
 project: COUNTERMAND
 program: Base Batches 004
-status: V0_1_EVALUATOR_EXPERIENCE_BUILT_CI_GREEN_AWAITING_PUBLIC_RUNTIME
+status: V0_1_PUBLIC_RUNTIME_VISIBLE_RUNTIME_SMOKE_PENDING
 date: 2026-09-10
 
 source_of_truth: GITHUB
@@ -18,6 +18,10 @@ current_scope:
   evaluator_surface: BUILT
   deterministic_counterexample: BUILT
   receipt_sha256_integrity_display: BUILT
+  public_runtime: VERCEL_VISIBLE_READY
+  public_runtime_url: https://countermand-mu.vercel.app
+  public_runtime_observed_commit: 231578c22a21b877b426532e33b128204c748952
+  runtime_interaction_smoke: PENDING
   base_sepolia_live_read: BUILT_PENDING_PUBLIC_RUNTIME_SMOKE
   base_write_execution: PREPARED_NOT_AUTHORIZED
   base_write_gate: evidence/BASE-SEPOLIA-WRITE-GATE.md
@@ -31,13 +35,15 @@ validation:
   github_actions_latest_verified_conclusion: SUCCESS
   syntax_checks: PASS_IN_CI
   deterministic_tests: PASS_IN_CI
+  deployment_visibility_evidence: evidence/VERCEL-PRODUCTION-VISIBLE-2026-09-10.md
 
 proof_classes:
   controlled_decision_evaluator: TECHNICAL_PROOF
+  vercel_production_visibility: HUMAN_OBSERVED_DEPLOYMENT_PROOF
   base_sepolia_rpc_and_code_checks: LIVE_READ_ONLY
   predecessor_valid_until_execution: VERIFIED_NON_PRODUCTION_PREDECESSOR_EVIDENCE
   base_transaction_execution: NOT_YET_CLAIMED
-  production_evidence: NOT_CLAIMED
+  production_interaction_evidence: NOT_YET_CLAIMED
   outcome_proof: NOT_CLAIMED
 
 base:
@@ -48,16 +54,15 @@ base:
   spend_permission_manager: 0xf85210B21cC50302F477BA56686d2019dC9b67Ad
 
 deployment:
-  desired_runtime: Vercel_or_equivalent_serverless_static_host
-  public_runtime: NOT_YET_VERIFIED
-  vercel_connector_state: ACCOUNT_CONTEXT_NOT_EXPOSED
-  vercel_observation: list_teams_returned_empty
-  github_pages_workflow: PREPARED_MANUAL_ONLY
-  github_pages_activation_attempt: BLOCKED_BY_INTEGRATION_PERMISSION
-  github_pages_failure_run: 34442779995
-  github_pages_failure_reason: Resource_not_accessible_by_integration_when_creating_Pages_site
-  interpretation: INFRASTRUCTURE_ACCESS_BLOCKER_NOT_PRODUCT_FAILURE
-  static_browser_base_rpc_fallback: BUILT
+  primary_runtime: Vercel
+  public_runtime: https://countermand-mu.vercel.app
+  dashboard_state_observed: Ready
+  source_branch: main
+  observed_commit: 231578c22a21b877b426532e33b128204c748952
+  runtime_smoke: PENDING
+  independent_connector_fetch: UNVERIFIED_CONNECTOR_COULD_NOT_FETCH_URL
+  github_pages_fallback: NOT_REQUIRED_FOR_PRIMARY_PATH
+  interpretation: PUBLIC_DEPLOYMENT_BLOCKER_CLEARED_RUNTIME_BEHAVIOR_STILL_TO_VERIFY
 
 brand_domain_scan:
   observed_available_2026_09_10:
@@ -84,11 +89,16 @@ safety_invariants:
   - submission_remains_human_protected
 
 next_gate:
-  id: PUBLIC_RUNTIME_DEPLOYMENT_AND_SMOKE
-  human_unblock_options:
-    - expose_or_connect_Vercel_project_context
-    - enable_GitHub_Pages_build_from_Actions_in_repository_settings
-    - connect_the_suggested_Netlify_plugin
+  id: PUBLIC_RUNTIME_INTERACTION_SMOKE
+  smoke_sequence:
+    - open_public_runtime
+    - confirm_default_ALLOW_state
+    - click_Advance_context_11_min
+    - confirm_wallet_permission_spend_cap_exact_action_integrity_remain_PASS
+    - confirm_original_premise_FAIL
+    - confirm_REPLAN_REQUIRED
+    - confirm_Base_Sepolia_live_read_or_explicit_fail_closed_state
+    - confirm_mobile_or_narrow_view_does_not_break_judge_path
   then:
     - BASE_SEPOLIA_WRITE_PROOF_IF_HUMAN_AUTHORIZED
     - FOUNDER_VIDEO
