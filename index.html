@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="COUNTERMAND — execution assurance for autonomous agents that move money." />
+  <meta name="theme-color" content="#f4f0e8" />
+  <title>COUNTERMAND — A decision can expire.</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <a class="skip" href="#proof">Skip to proof</a>
+
+  <header class="masthead">
+    <div class="wordmark" aria-label="COUNTERMAND">
+      <span>COUNTERMAND</span>
+      <small>execution assurance / 001</small>
+    </div>
+    <nav aria-label="Primary">
+      <a href="#proof">Live proof</a>
+      <a href="#primitive">Primitive</a>
+      <a href="#base">Base</a>
+      <a href="https://github.com/Faadil1/COUNTERMAND" rel="noreferrer">Source ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="proof">
+      <div class="hero-copy">
+        <p class="eyebrow">A control plane for autonomous economic action</p>
+        <h1>
+          <span>The wallet still said</span>
+          <strong>YES.</strong>
+          <span>The decision no longer did.</span>
+        </h1>
+        <p class="lede">
+          Permissions tell an agent what it <em>may</em> do. COUNTERMAND checks whether the exact
+          action it decided earlier is still justified when value is about to move.
+        </p>
+        <div class="hero-actions">
+          <button class="primary" id="advanceBtn" type="button">Advance context +11 min</button>
+          <button class="text-button" id="resetBtn" type="button">Reset decision</button>
+        </div>
+      </div>
+
+      <div class="instrument" aria-live="polite">
+        <div class="instrument-head">
+          <span>Decision receipt</span>
+          <span id="receiptId">CM-7A31</span>
+        </div>
+
+        <div class="receipt-grid">
+          <div class="receipt-field wide">
+            <span>Exact action</span>
+            <strong>PAY 18.00 USDC</strong>
+            <small>x402 / research-data.request</small>
+          </div>
+          <div class="receipt-field">
+            <span>Wallet cap</span>
+            <strong>25.00 USDC</strong>
+            <small>per call</small>
+          </div>
+          <div class="receipt-field">
+            <span>Validity</span>
+            <strong>15 min</strong>
+            <small>decision lifetime</small>
+          </div>
+          <div class="receipt-field wide">
+            <span>Original premise</span>
+            <strong>dataset age ≤ 5 min</strong>
+            <small id="t0Observation">T0 observed: 2 min</small>
+          </div>
+        </div>
+
+        <div class="time-rail">
+          <div>
+            <span>T0</span>
+            <strong>09:41:12</strong>
+          </div>
+          <div class="rail-line"><i id="railFill"></i></div>
+          <div>
+            <span>T1</span>
+            <strong id="t1Time">09:41:22</strong>
+          </div>
+        </div>
+
+        <div class="checklist" id="checklist">
+          <div data-check="permission"><span>Wallet permission</span><b>PASS</b></div>
+          <div data-check="cap"><span>Spend cap</span><b>PASS</b></div>
+          <div data-check="action"><span>Exact action hash</span><b>PASS</b></div>
+          <div data-check="integrity"><span>Receipt integrity</span><b>PASS</b></div>
+          <div data-check="premise"><span>Original premise</span><b>PASS</b></div>
+        </div>
+
+        <div class="verdict allow" id="verdict">
+          <div>
+            <span id="verdictLabel">ACTION REMAINS VALID</span>
+            <strong id="verdictText">ALLOW</strong>
+          </div>
+          <p id="verdictReason">The decision and its premise still agree with fresh state.</p>
+        </div>
+
+        <div class="countermand-stamp" id="stamp" aria-hidden="true">
+          <span>COUNTERMAND</span>
+          <small>REPLAN REQUIRED</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="live-strip" aria-label="Base Sepolia live status">
+      <div class="live-marker"><i></i> LIVE READ</div>
+      <div>
+        <span>NETWORK</span>
+        <strong id="networkValue">Base Sepolia / connecting…</strong>
+      </div>
+      <div>
+        <span>LATEST BLOCK</span>
+        <strong id="blockValue">—</strong>
+      </div>
+      <div>
+        <span>USDC CONTRACT</span>
+        <strong id="usdcValue">checking…</strong>
+      </div>
+      <div>
+        <span>SPEND PERMISSION MGR</span>
+        <strong id="permissionManagerValue">checking…</strong>
+      </div>
+      <button class="refresh" id="refreshBaseBtn" type="button">Refresh ↻</button>
+    </section>
+
+    <section class="thesis" id="primitive">
+      <p class="section-number">01 / THE MISSING CHECK</p>
+      <div class="thesis-grid">
+        <h2>Authorization can outlive its reason.</h2>
+        <div class="prose">
+          <p>
+            Smart-account permissions, spend limits and transaction simulation answer whether an action
+            is currently permitted. They do not preserve the causal link between a decision made at T0
+            and an execution attempted at T1.
+          </p>
+          <p>
+            COUNTERMAND turns that decision into a short-lived object: policy, T0 context, exact action,
+            validity window and integrity digest. Immediately before execution, the old decision is
+            tested against fresh state.
+          </p>
+        </div>
+      </div>
+
+      <div class="not-grid">
+        <article><span>NOT</span><h3>a wallet</h3><p>It does not custody funds or replace account controls.</p></article>
+        <article><span>NOT</span><h3>a policy engine</h3><p>It can consume policy, but its job is cross-time decision validity.</p></article>
+        <article><span>NOT</span><h3>another agent</h3><p>The model may propose. It does not self-authorize stale reasoning.</p></article>
+        <article class="is"><span>IS</span><h3>a decision boundary</h3><p>A final check on whether the reason still exists before value moves.</p></article>
+      </div>
+    </section>
+
+    <section class="base-section" id="base">
+      <p class="section-number">02 / BASE-FIRST</p>
+      <div class="base-grid">
+        <div>
+          <h2>Built for the moment agents become economic actors.</h2>
+          <p>
+            Base already gives agents the pieces needed to transact: USDC, smart accounts, spend
+            permissions, x402 services and onchain markets. COUNTERMAND is designed to sit immediately
+            before that execution boundary.
+          </p>
+        </div>
+        <ol class="sequence">
+          <li><span>01</span><div><strong>Decide</strong><small>Agent forms an economic action at T0.</small></div></li>
+          <li><span>02</span><div><strong>Seal</strong><small>Exact action + premise become a decision receipt.</small></div></li>
+          <li><span>03</span><div><strong>Observe</strong><small>Fresh Base / service state is read at T1.</small></div></li>
+          <li><span>04</span><div><strong>Revalidate</strong><small>Permission and decision validity are checked separately.</small></div></li>
+          <li><span>05</span><div><strong>Release or replan</strong><small>ALLOW, or terminate the old decision.</small></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="proof-ledger">
+      <p class="section-number">03 / EVIDENCE LEDGER</p>
+      <div class="ledger-grid">
+        <article>
+          <span class="proof-class">LIVE / READ-ONLY</span>
+          <h3>Base Sepolia pulse</h3>
+          <p>
+            This page reads Base Sepolia through the public RPC and verifies that the canonical testnet
+            USDC and Spend Permission Manager addresses contain deployed bytecode.
+          </p>
+          <small>No transaction is sent from this public demo.</small>
+        </article>
+        <article>
+          <span class="proof-class">CONTROLLED</span>
+          <h3>Decision-expiry evaluator</h3>
+          <p>
+            The instrument above keeps wallet permission, spend cap, action identity and receipt
+            integrity green while changing only the original premise.
+          </p>
+          <small>That isolates the failure mode COUNTERMAND exists to catch.</small>
+        </article>
+        <article>
+          <span class="proof-class">PREDECESSOR / VERIFIED EXECUTION</span>
+          <h3>Valid Until</h3>
+          <p>
+            The earlier prototype already proved signed receipts, T0→T1 revalidation, six adversarial
+            cases and one authenticated non-production execution boundary.
+          </p>
+          <div class="links">
+            <a href="https://valid-until-agent-os.pages.dev" rel="noreferrer">Demo ↗</a>
+            <a href="https://valid-until-agent-os.pages.dev/evaluations" rel="noreferrer">6-case eval ↗</a>
+            <a href="https://valid-until-agent-os.pages.dev/live-proof" rel="noreferrer">Execution proof ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="closing">
+      <p class="section-number">04 / THE CATEGORY</p>
+      <h2>Agents need more than permission.<br />They need decisions with a lifetime.</h2>
+      <div class="closing-line">
+        <span>COUNTERMAND</span>
+        <span>execution assurance for autonomous agents</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Base-first prototype / pre-seed</span>
+    <span id="footerState">Public demo is read-only. No mainnet. No real funds.</span>
+  </footer>
+
+  <script src="/countermand-core.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
