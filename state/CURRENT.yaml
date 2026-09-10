@@ -27,7 +27,7 @@ current_scope:
 
 validation:
   core_cases: PASS_6_OF_6
-  github_actions_latest_verified_run: 34442464857
+  github_actions_latest_verified_success_run: 34442464857
   github_actions_latest_verified_conclusion: SUCCESS
   syntax_checks: PASS_IN_CI
   deterministic_tests: PASS_IN_CI
@@ -50,8 +50,12 @@ base:
 deployment:
   desired_runtime: Vercel_or_equivalent_serverless_static_host
   public_runtime: NOT_YET_VERIFIED
-  current_connector_state: VERCEL_ACCOUNT_CONTEXT_NOT_EXPOSED
-  connector_observation: list_teams_returned_empty
+  vercel_connector_state: ACCOUNT_CONTEXT_NOT_EXPOSED
+  vercel_observation: list_teams_returned_empty
+  github_pages_workflow: PREPARED_MANUAL_ONLY
+  github_pages_activation_attempt: BLOCKED_BY_INTEGRATION_PERMISSION
+  github_pages_failure_run: 34442779995
+  github_pages_failure_reason: Resource_not_accessible_by_integration_when_creating_Pages_site
   interpretation: INFRASTRUCTURE_ACCESS_BLOCKER_NOT_PRODUCT_FAILURE
   static_browser_base_rpc_fallback: BUILT
 
@@ -81,6 +85,10 @@ safety_invariants:
 
 next_gate:
   id: PUBLIC_RUNTIME_DEPLOYMENT_AND_SMOKE
+  human_unblock_options:
+    - expose_or_connect_Vercel_project_context
+    - enable_GitHub_Pages_build_from_Actions_in_repository_settings
+    - connect_the_suggested_Netlify_plugin
   then:
     - BASE_SEPOLIA_WRITE_PROOF_IF_HUMAN_AUTHORIZED
     - FOUNDER_VIDEO
