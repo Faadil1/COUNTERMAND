@@ -1,0 +1,56 @@
+project: COUNTERMAND
+program: Base Batches 004
+status: V0_1_EVALUATOR_EXPERIENCE_BUILT_AWAITING_DEPLOYMENT_VERIFICATION
+date: 2026-09-10
+
+source_of_truth: GITHUB
+repository: Faadil1/COUNTERMAND
+branch: main
+
+thesis: Permission can persist after the reason is gone.
+category: EXECUTION_ASSURANCE_FOR_AUTONOMOUS_ECONOMIC_AGENTS
+
+evaluator_memory_target: >-
+  It is the one where every wallet check was green, but the transaction was
+  still stopped because the original reason had expired.
+
+current_scope:
+  evaluator_surface: BUILT
+  deterministic_counterexample: BUILT
+  base_sepolia_live_read: BUILT_PENDING_DEPLOYMENT_SMOKE
+  base_write_execution: NOT_YET_AUTHORIZED
+  founder_video: SCRIPT_EXISTS_NEEDS_RECORDING
+  application_copy: DRAFT_EXISTS_NEEDS_FINAL_FIELD_FIT
+  protected_submission: NOT_AUTHORIZED
+
+proof_classes:
+  controlled_decision_evaluator: TECHNICAL_PROOF
+  base_sepolia_rpc_and_code_checks: LIVE_READ_ONLY
+  predecessor_valid_until_execution: VERIFIED_NON_PRODUCTION_PREDECESSOR_EVIDENCE
+  base_transaction_execution: NOT_YET_CLAIMED
+  production_evidence: NOT_CLAIMED
+  outcome_proof: NOT_CLAIMED
+
+base:
+  network: Base Sepolia
+  chain_id: 84532
+  rpc: https://sepolia.base.org
+  usdc: 0x036CbD53842c5426634e7929541eC2318f3dCF7e
+  spend_permission_manager: 0xf85210B21cC50302F477BA56686d2019dC9b67Ad
+
+safety_invariants:
+  - no_private_keys_in_repo_or_chat
+  - no_mainnet_write
+  - no_real_funds
+  - no_public_unrestricted_write_route
+  - base_live_read_must_fail_closed
+  - predecessor_evidence_must_not_be_misrepresented_as_base_evidence
+  - submission_remains_human_protected
+
+next_gate:
+  id: DEPLOYMENT_AND_RUNTIME_SMOKE
+  then:
+    - BASE_SEPOLIA_WRITE_PROOF_IF_HUMAN_AUTHORIZED
+    - FOUNDER_VIDEO
+    - APPLICATION_COPY_FINAL_FIT
+    - HUMAN_PROTECTED_SUBMISSION
