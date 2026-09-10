@@ -1,0 +1,10 @@
+{
+  "name": "countermand",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Execution assurance for autonomous agents that move money.",
+  "scripts": {
+    "test": "node tests/core.test.js",
+    "check": "node --check countermand-core.js && node --check app.js && node --check api/base-state.js"
+  }
+}
